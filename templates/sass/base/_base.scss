@@ -13,3 +13,12 @@ html{
     overflow-y:scroll;
     min-height:100%;
 }
+
+
+/**
+ * Max Width
+ */
+
+img, object, video{
+    max-width: 100%;
+}

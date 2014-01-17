@@ -27,6 +27,7 @@ $direction   : ltr;
 
 $base-font-size   : 16px;
 $base-line-height : 24px;
+$brand-radius: 50px;
 
 
 /*------------------------------------*\
@@ -50,7 +51,8 @@ $line-height-ratio : $base-line-height / $base-font-size;
  * Base font-family.
  */
 
-$base-font-family : "Helvetica Neue", Helvetica, Arial, sans-serif!default;
+$base-font-family : "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif!default;
+$heading-font-family : "Bree Serif", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif!default;
 
 
 /**
@@ -73,12 +75,7 @@ $fa-font-path: '../../bower_components/font-awesome/fonts';
  */
 $brand-color : #e57200;
 $brand-face  : $base-font-family;
-$grey        : #7c7f81;
 $base-color  : #333;
-$light-color : #999;
-$lighter-color : #bbb;
-$brand-radius: 5px;
-$color-green: green;
 
 /**
  * How big would you like round corners to be by default?
@@ -246,7 +243,7 @@ $alert-info-color         : #3A87AD;
 \*------------------------------------*/
 
 $grid-columns   : 12; /* 12 Column Grid */
-$site-width     : 960px;
+$site-width     : 1100px;
 $min-site-width : 0;
 $tablet-cut-off : 960px;
 $max-site-width : 960px;

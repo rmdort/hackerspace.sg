@@ -1,36 +1,36 @@
 {{> header }}
 
+    <!-- Who are we -->
+    <div class="intro">
+    
+        <h1>HackerSpaceSG is our community-operated physical place at <a href="location">KGB</a>.</h1>
+        <p>We’re known to be inquisitive, creative, entrepreneural and usually fun. We’re always having something interesting on the <a href="calendar">calendar</a>, so come on over to check our <a href="location">place</a> out, <a href="connect">say hi</a> or better still, <a href="membership">join us</a> today!</p>
 
-<div class="jumbotron">
-
-  <div class="highlight">
-    <img alt="Welcome to Hackerspace Singapore" class=banner src="/imgs/banner.png">
-  </div>
-
-</div>
-
-<div class="container">
-
-
-<div class="row">
-    <div class="columns six">
-        <h2>Upcoming Events</h2>
-
-        {{#events}}
-        <p><strong>{{Name}}</strong>
-        on {{#date}}{{When}}{{/date}} at {{#time}}{{When}}{{/time}}</p>
-        {{/events}}        
     </div>
+    <!-- / Who are we -->
+    
 
-    <div class="columns six">
-        <h2>Tweets</h2>
+    
 
-        <ul>
-        {{{tweets}}}
-        </ul>        
+
+    <div class="row">
+        <div class="columns six">
+            <h2>Upcoming Events</h2>
+
+            {{#events}}
+            <p><strong>{{Name}}</strong>
+            on {{#date}}{{When}}{{/date}} at {{#time}}{{When}}{{/time}}</p>
+            {{/events}}        
+        </div>
+
+        <div class="columns six">
+            <h2>Tweets</h2>
+
+            <ul>
+            {{{tweets}}}
+            </ul>        
+        </div>
     </div>
-</div>
-
 
 
 

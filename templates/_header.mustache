@@ -4,20 +4,23 @@
 	<meta charset="utf-8">
 	<title>{{{site-title}}}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,300,600,700" rel="stylesheet" type="text/css"/>
+    <link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" media="screen" href="/sass/main.css">    
 </head>
-
 <body>
 
-<nav class="navbar navbar-default" role="navigation">
-<div class="navbar-header">
-<ul class="nav navbar-nav">
-{{#navbar}}
-<li><a href="{{{href}}}">{{label}}</a>
-{{/navbar}}
-</ul>
-</div>
-</nav>
+    <div class="container">
 
-<div class="container">
+        <!-- Logo -->
+        <a href="index.html" class="logo">
+            <img alt="Welcome to Hackerspace Singapore" class=banner src="/imgs/banner.png">
+        </a>
+        <!-- / Logo -->
+        
+        {{> navigation}}
 
+
+        <!-- Main -->
+        <section class="main">
+        
