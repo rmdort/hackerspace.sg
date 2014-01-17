@@ -10,6 +10,9 @@
 	"plugins": {
 		"generator_hooks": {
 			"htaccess": "./htaccess.js"
-		}
+		},
+		"compilers": {
+        	".css": "punch-sass-compiler" 
+    	}
 	}
 }
