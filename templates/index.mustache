@@ -1,23 +1,5 @@
-<!DOCTYPE html>
-<html class="no-js">
-<head>
-	<meta charset="utf-8">
-	<title>{{{site-title}}}</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<link rel="stylesheet" type="text/css" media="screen" href="/css/cosmo.css">
-</head>
+{{> header }}
 
-<body>
-
-<nav class="navbar navbar-default" role="navigation">
-<div class="navbar-header">
-<ul class="nav navbar-nav">
-{{#navbar}}
-<li><a href="{{{href}}}">{{label}}</a>
-{{/navbar}}
-</ul>
-</div>
-</nav>
 
 <div class="jumbotron">
 
@@ -29,17 +11,27 @@
 
 <div class="container">
 
-<h2>Upcoming Events</h2>
 
-{{#events}}
-<p><strong>{{Name}}</strong>
-on {{#date}}{{When}}{{/date}} at {{#time}}{{When}}{{/time}}</p>
-{{/events}}
+<div class="row">
+    <div class="columns six">
+        <h2>Upcoming Events</h2>
 
-<h2>Tweets</h2>
+        {{#events}}
+        <p><strong>{{Name}}</strong>
+        on {{#date}}{{When}}{{/date}} at {{#time}}{{When}}{{/time}}</p>
+        {{/events}}        
+    </div>
 
-<ul>
-{{{tweets}}}
-</ul>
+    <div class="columns six">
+        <h2>Tweets</h2>
+
+        <ul>
+        {{{tweets}}}
+        </ul>        
+    </div>
+</div>
+
+
+
 
 {{> footer }}
