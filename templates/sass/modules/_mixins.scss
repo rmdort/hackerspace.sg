@@ -1,0 +1,350 @@
+/**
+ * Clearfix
+ */
+
+%clearfix {
+  &:after {
+      content: ".";
+      display: block;
+      clear: both;
+      visibility: hidden;
+      line-height: 0;
+      height: 0;
+  }
+}
+
+
+/**
+ * Inline List
+ */
+
+@mixin list-inline{
+
+  list-style: none;
+  margin-left: 0;
+
+  > li{
+    display: inline;
+  }
+}
+
+/**
+ * Focus Styles
+ */
+
+%focus-style{
+  box-shadow :  0 1px 2px rgba(0,0,0,0.075) inset, 
+                  0 0 5px rgba(81,167,232,0.5);
+  border-color: #51A7E8;
+}
+
+/** 
+ * Strip Units
+ */
+
+@function strip-unit($number) {
+  @return $number / ($number * 0 + 1);
+}
+
+/**
+ * Rem Units
+ * Converts properties to both REM and Pixel Values. Based on line-height
+ * @include rem(margin-bottom, 0.5)
+ * @include rem(padding, 1, 20px);
+ */
+
+@mixin rem($property, $multiplier: 1, $unit: $base-spacing-unit){
+
+  @if type-of($multiplier) != "number"{
+
+    $unit: $multiplier;
+    $multiplier: 1;
+  }
+  @include rem-full($multiplier, $property, $unit);
+}
+
+
+/**
+ * Helper function for REM
+ * @include rem-full(padding, 10px 20px 10px 30px);
+ */
+
+@mixin rem-full($multiplier, $property, $px-values) {
+  // Convert the baseline into rems
+  $baseline-rem: $base-font-size / 1rem * 1;
+  // Print the first line in pixel values
+  
+  // If there is only one (numeric) value, return the property/value line for it.
+  @if type-of($px-values) == "number" {
+    #{$property}: $px-values * $multiplier;
+    #{$property}: $px-values / $baseline-rem * $multiplier; 
+  }
+  @else {
+    // Create an empty list that we can dump values into
+    $rem-values: ();
+    $pixel-values: ();
+    @each $value in $px-values {
+      // If the value is zero or not a number, return it
+      @if $value == 0 or type-of( $value ) != "number" {
+        $rem-values: append($rem-values, $value); 
+        $pixel-values: append($pixel-values, $value);
+      }
+      @else {
+        $rem-values: append($rem-values, $value / $baseline-rem * $multiplier); 
+        $pixel-values: append($pixel-values, $value * $multiplier);
+      } 
+    }
+    // Return the property and its list of converted values
+    #{$property}: $pixel-values;
+    #{$property}: $rem-values; 
+  } 
+}
+
+/*
+ *  REM Shim
+ */
+
+@mixin rem-shim($property, $value){
+  
+  #{$property} :$base-font-size * strip-units($value);
+  #{$property} :$value;
+
+}
+
+
+/* No List Style */
+
+@mixin list-none{
+  list-style: none;
+  margin-left:0;
+  padding-left:0;
+}
+
+
+@mixin font-size-alt($sizeValue: 16){
+  font-size: ($sizeValue * 1) + px;
+  font-size: $sizeValue / 10 + rem;
+}
+
+
+// Clearfix
+
+@mixin clearfix {
+  @extend %clearfix;
+}
+
+
+// Hover Link Mixin
+
+@mixin hover-link {
+  text-decoration: none;
+  &:hover {
+    text-decoration: if($underline-on-hover, underline, none );
+  }
+}
+
+// Convert Numbers to Work
+
+@function convert-number-to-word($num) {
+  $count:1;
+  @each $word in one,two,three,four,five,six,seven,eight,nine,ten,eleven, twelve,thirteen,fourteen,fifteen,sixteen,seventeen,eighteen,nineteen, twenty,twentyone,twentytwo,twentythree,twentyfour{
+    @if ($count == $num) { @return $word; }
+    $count: $count + 1;
+  }
+  @return "invalid";
+}
+
+// Convert Pixel to Em
+
+@function calc-em($target-px) {
+  @return ($target-px / 16px) * 1em;
+}
+
+
+
+
+
+/**
+ * Font Face
+ */
+
+@mixin font-face($font-family, $file-path, $weight: normal, $style: normal, $asset-pipeline: false ) {
+  @font-face {
+    font-family: $font-family;
+    font-weight: $weight;
+    font-style: $style;
+
+    @if $asset-pipeline == true {
+      src: font-url('#{$file-path}.eot');
+      src: font-url('#{$file-path}.eot?#iefix')          format('embedded-opentype'),
+           font-url('#{$file-path}.woff')                format('woff'),
+           font-url('#{$file-path}.ttf')                 format('truetype'),
+           font-url('#{$file-path}.svg##{$font-family}') format('svg');
+    } @else {
+      src: url('#{$file-path}.eot');
+      src: local('☺'),
+           url('#{$file-path}.eot?#iefix')               format('embedded-opentype'),
+           url('#{$file-path}.woff')                     format('woff'),
+           url('#{$file-path}.ttf')                      format('truetype'),
+           url('#{$file-path}.svg##{$font-family}')      format('svg');
+    }
+  }
+}
+
+/**
+ * Panels
+ */
+
+// We use these to set default font colors
+
+$panel-font-color     : $base-ui-color !default;
+$panel-font-color-alt : #fff !default;
+
+@mixin panel($bg, $padding, $adjust: true){
+  @extend %sass-margin-bottom;
+
+  @if $bg {
+    $bg-lightness : lightness($bg);
+    border        : 1px solid darken($bg, 10%);
+    padding       : $padding;
+    background    : $bg;
+
+    // Respect the padding, fool.
+    &>:first-child { margin-top: 0; }
+    &>:last-child { margin-bottom: 0; }
+
+    @if $adjust {
+      // We set the font color based on the darkness of the bg.
+      @if $bg-lightness >= 50% and $bg == blue { h1,h2,h3,h4,h5,h6,p { color: $panel-font-color-alt; } }
+      @else if $bg-lightness >= 50%            { h1,h2,h3,h4,h5,h6,p { color: $panel-font-color; } }
+      @else                                    { h1,h2,h3,h4,h5,h6,p { color: $panel-font-color-alt; } }
+    }
+  }
+}
+
+
+/**
+ * Grids
+ */
+
+/**
+ * Calculates Percentage for each column
+ */
+
+@function gridCalc($colNumber, $grid-columns) {
+  @return percentage(($colNumber / $grid-columns));
+}
+
+/**
+ * Convert numbers to words
+ * 1 => 'one'
+ */
+
+@function convert-number-to-word($num) {
+  $count:1;
+  @each $word in one,two,three,four,five,six,seven,eight,nine,ten,eleven,
+    twelve,thirteen,fourteen,fifteen,sixteen,seventeen,eighteen,nineteen,
+    twenty,twentyone,twentytwo,twentythree,twentyfour{
+    @if ($count == $num) { @return $word; }
+    $count: $count + 1;
+  }
+  @return "invalid";
+}
+
+
+
+/* Mixin for Bordered Blocks */
+
+
+%border-top-bottom-block{
+  border: 1px $color-pale solid;
+  border-width: 1px 0;
+  @include rem(padding-top, 0.5);
+  @include rem(padding-bottom, 0.5);  
+}
+
+
+
+/* Mixin for Box Shadow */
+
+%box-shadow-commom{
+  box-shadow: 0 0 5px 0px rgba(0,0,0,0.4);
+}
+
+/* Mixin for Box Shadow - Normal */
+
+%box-shadow-normal{
+  box-shadow: 0 0 3px 0px rgba(0,0,0,0.2);
+}
+
+
+
+/**
+ * Bright Module
+ */
+
+@mixin bright-module{
+  background: $link-color;
+  color: #fff;
+  
+  /* Form Elements Borders */
+
+  input[type="text"], 
+  textarea, 
+  .selecter .selecter-selected, 
+  .selecter .selecter-selected:after, 
+  .selecter .selecter-options{
+    border-color: darken($link-color, 10%);
+  }
+}
+
+
+/* Darker Inputs */
+
+
+%darker-input{
+  /* Input Colors Inside Light Blocks */
+
+  .text-input, textarea{
+    //border-color: $input-border-color;
+
+    &:focus{
+      //@extend %focus-style;
+      //border-color: inherit;
+    }
+  }
+
+}
+
+
+
+/**
+ * Links for MOM Website. Icon + Text
+ */
+
+%link-icon{
+
+  &:before{
+    font-family: "FontAwesome";      
+    float: left;
+    margin: 0 -1.2em;
+    margin-right: 0.3em;
+    font-style: normal;
+    font-weight: normal;
+    //line-height: 1;
+    //margin-top: 1px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    float: none;
+    display: inline-block;    
+  }
+
+
+  margin-left: 1.2em;
+  display: inline-block;
+
+  &:hover:before{
+    text-decoration: none !important;
+  }
+}

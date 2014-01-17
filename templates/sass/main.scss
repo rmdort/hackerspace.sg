@@ -1,0 +1,55 @@
+@charset "UTF-8";
+/*------------------------------------*\
+    STYLE.CSS
+\*------------------------------------*/
+
+/**
+ * CSS Guidelines: https://github.com/csswizardry/CSS-Guidelines
+ * Naming Convention: https://github.com/csswizardry/CSS-Guidelines#naming-conventions
+ * 
+ * BEM Methodology: 
+ * ----------------
+ * http://bem.info/
+ * http://coding.smashingmagazine.com/2012/04/16/a-new-front-end-methodology-bem/
+ * http://nicolasgallagher.com/about-html-semantics-front-end-architecture/
+ * 
+ * .block{} 
+ * .block__element{}
+ * .block--modifier{}
+ * 
+ * .block represents the higher level of an abstraction or component.
+ * .block__element represents a descendent of .block that helps form .block as a whole.
+ * .block--modifier represents a different state or version of .block.
+ */
+
+
+/**
+ * Import Variables
+ */
+@import "modules/vars";
+
+
+/**
+ * Import Mixins
+ */
+
+@import "modules/mixins";
+
+/**
+ * Import Base
+ */
+@import "base/base";
+
+
+/**
+ * Import Presentation
+ */
+
+@import "presentation/presentation";
+
+
+/**
+ * Import Responsive
+ */
+
+@import  "responsive/responsive";
